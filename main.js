@@ -1,4 +1,7 @@
-let BtnEl = document.querySelector("#dark-mode");
+const BtnEl = document.querySelector("#dark-mode");
+const search = document.querySelector("input");
+const container = document.getElementById("countriee");
+const select = document.querySelector("select");
 
 BtnEl.addEventListener("click", () => {
   document.body.classList.toggle("dark-mode");
@@ -48,7 +51,7 @@ const countries = [
     name: "Brazil",
     nativeName: "Brasil",
     population: 206135893,
-    region: "Americas",
+    region: "America",
     subRegion: "South America",
     capital: "Brasília",
     topLevelDomain: ".br",
@@ -153,13 +156,11 @@ const countries = [
   },
 ];
 
-const container = document.getElementById("countriee");
-
-countries.forEach((country) => {
-  countriee.innerHTML += `
+function Country(country) {
+  container.innerHTML += `
     <div class="card">
       <img src="${country.flag}" alt="flag">
-      
+
       <div class="card-content">
         <h2>${country.name}</h2>
 
@@ -180,4 +181,30 @@ countries.forEach((country) => {
       </div>
     </div>
   `;
+}
+
+search.addEventListener("input", (e) => {
+  const filteredUS = countries.filter((countri) => {
+    return countri.name.toLowerCase().includes(e.target.value);
+  });
+
+  container.innerHTML = "";
+
+  filteredUS.forEach((countrii) => {
+    Country(countrii);
+  });
+});
+
+select.addEventListener("change", (e) => {
+  const value = e.target.value;
+
+  container.innerHTML = "";
+
+  const filtered = countries.filter((country) => {
+    return country.region === value;
+  });
+
+  filtered.forEach((country) => {
+    Country(country);
+  });
 });
